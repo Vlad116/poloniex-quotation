@@ -1,2 +1,2 @@
 # poloniex-quatation
-Show poloniex Ticker data
+Show poloniex ticker data
