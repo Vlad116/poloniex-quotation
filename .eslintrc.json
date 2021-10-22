@@ -27,7 +27,7 @@
         ],
         "linebreak-style": [
             "error",
-            "unix"
+            "windows"
         ],
         "quotes": [
             "error",
@@ -36,6 +36,7 @@
         "semi": [
             "error",
             "never"
-        ]
+        ],
+        "react/display-name": "off"
     }
 }

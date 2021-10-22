@@ -1,13 +1,31 @@
-import * as React from 'react'
+import React, { useState, useEffect } from 'react'
+import LinkButton from '../components/LinkButton'
+import QuotesTable from '../components/QuotesTable/QuotesTable'
+import { getQotes } from '../services/TickerService'
 
 export type IQuotation = {
-	SourceName: string;
+	sourceName: string;
 }
 
-const Quatation: React.FC<IQuotation> = ({ SourceName }) => {
+const columns = { 'tickerName': 'Название', 'last': 'Цена последней сделки', 'highestBid': 'Высшая ставка', 'percentChange': 'Изменение за день' }
+
+const Quatation: React.FC<IQuotation> = ({ sourceName }) => {
+	const [quotes, setQuotes] = useState<{ [k: string]: Record<string, string | number> }>()
+
+	useEffect(() => {
+		(async () => {
+			const isGrowingValues = sourceName === 'Growing quotes'
+			setQuotes(await getQotes(isGrowingValues))
+		})()
+	}, [])
+
 	return (
 		<div>
-			<h1>Source API: {SourceName} </h1>
+			<h1>
+				<LinkButton text='🔙 to about' route='about' />
+				<p>Source API: {sourceName}</p>
+				<QuotesTable columns={columns} data={quotes !== undefined ? quotes : undefined} />
+			</h1>
 		</div>
 	)
 }
